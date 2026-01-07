@@ -184,6 +184,7 @@ SingleAxisStage::SingleAxisStage(std::string const& name,
     case TypeIDVerticalStage: defaultDeviceUnitsPerMm = 25050.0; break; 
     case TypeIDKCubeInertialMotor1Channel: defaultDeviceUnitsPerMm = 28248.5876; break; // measured by h.liu on 2021/11/23 
     }
+    deviceUnitsPerUm_ = defaultDeviceUnitsPerMm; // added by h.liu to fix issue
     CreateFloatProperty(PROP_DeviceUnitsPerMillimeter,
         defaultDeviceUnitsPerMm, false, nullptr, true);
 
