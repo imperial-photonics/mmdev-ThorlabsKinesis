@@ -183,8 +183,7 @@ SingleAxisStage::SingleAxisStage(std::string const& name,
     case TypeIDLongTravelStage: defaultDeviceUnitsPerMm = 409600.0; break;
     case TypeIDVerticalStage: defaultDeviceUnitsPerMm = 25050.0; break; 
     case TypeIDKCubeInertialMotor1Channel: defaultDeviceUnitsPerMm = 28248.5876; break; // measured by h.liu on 2021/11/23 
-    }
-    deviceUnitsPerUm_ = defaultDeviceUnitsPerMm; // added by h.liu to fix issue
+    } 
     CreateFloatProperty(PROP_DeviceUnitsPerMillimeter,
         defaultDeviceUnitsPerMm, false, nullptr, true);
 
@@ -323,22 +322,37 @@ SingleAxisStage::Initialize() {
     }
     else if (strcmp(stageName, PROPVAL_StageNameCustom) == 0)
     {
-        long stepsPerRev = 0;
-        long gearboxRatio = 0;
-        long motorPitch = 0;
+        // modified by h.liu 
+        // ------------------
+        double deviceUnitsPerMm = 1.0;
+        switch (TypeIDOfSerialNo(serialNo_)) {
+        case TypeIDKCubeInertialMotor1Channel: 
+            // read from pre-init 
+            GetProperty(PROP_DeviceUnitsPerMillimeter, deviceUnitsPerMm);
+            deviceUnitsPerUm_ = deviceUnitsPerMm / 1000;
+            break;
+        default:
+            // do as designed
+            long stepsPerRev = 0;
+            long gearboxRatio = 0;
+            long motorPitch = 0;
 
-        GetProperty(PROP_MotorStepsPerRev, stepsPerRev);
-        GetProperty(PROP_MotorGearboxRatio, gearboxRatio);
-        GetProperty(PROP_MotorPitch, motorPitch);
+            GetProperty(PROP_MotorStepsPerRev, stepsPerRev);
+            GetProperty(PROP_MotorGearboxRatio, gearboxRatio);
+            GetProperty(PROP_MotorPitch, motorPitch);
 
-        motorGearboxRatio_ = gearboxRatio;
-        motorStepsPerRev_ = stepsPerRev;
-        motorPitch_ = motorPitch;
+            motorGearboxRatio_ = gearboxRatio;
+            motorStepsPerRev_ = stepsPerRev;
+            motorPitch_ = motorPitch;
 
-        deviceUnitsPerUm_ = (motorGearboxRatio_ * motorStepsPerRev_ / motorPitch_) / 1000;
+            deviceUnitsPerUm_ = (motorGearboxRatio_ * motorStepsPerRev_ / motorPitch_) / 1000;
 
-        SetProperty(PROP_DeviceUnitsPerMillimeter, std::to_string(deviceUnitsPerUm_*1000).c_str());
-        SetProperty(PROP_DeviceUnitsPerRevolution, std::to_string(deviceUnitsPerUm_*360).c_str());
+            SetProperty(PROP_DeviceUnitsPerMillimeter, std::to_string(deviceUnitsPerUm_ * 1000).c_str());
+            SetProperty(PROP_DeviceUnitsPerRevolution, std::to_string(deviceUnitsPerUm_ * 360).c_str());
+
+            break;
+        } 
+        // ------------------
     }
     else
     {
