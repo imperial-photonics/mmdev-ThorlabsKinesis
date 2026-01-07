@@ -23,6 +23,7 @@
     <ClInclude Include="IntegratedStepper.h" />
     <ClInclude Include="KCubeBrushless.h" />
     <ClInclude Include="KCubeDCServo.h" />
+    <ClInclude Include="KCubeInertial.h" />
     <ClInclude Include="KCubeStepper.h" />
     <ClInclude Include="KinesisDevice.h" />
     <ClInclude Include="KinesisXMLFunctions.h" />
@@ -46,6 +47,7 @@
     <ClCompile Include="IntegratedStepper.cpp" />
     <ClCompile Include="KCubeBrushless.cpp" />
     <ClCompile Include="KCubeDCServo.cpp" />
+    <ClCompile Include="KCubeInertial.cpp" />
     <ClCompile Include="KCubeStepper.cpp" />
     <ClCompile Include="KinesisDevice.cpp" />
     <ClCompile Include="KinesisDeviceAdapter.cpp" />

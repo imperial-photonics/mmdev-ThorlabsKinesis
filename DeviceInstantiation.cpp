@@ -63,6 +63,8 @@ MM::Device* MakeDevice(std::string const& name, std::string const& serialNo,
     case TypeIDBenchtopDCServo3Channel:
     case TypeIDBenchtopStepper1Channel:
     case TypeIDBenchtopStepper3Channel:
+    case TypeIDKCubeInertialMotor4Channel: // added by h.liu 
+    case TypeIDKCubeInertialMotor1Channel: // added by h.liu 
         return new SingleAxisStage{ name, serialNo, channel, connection };
 
     default:

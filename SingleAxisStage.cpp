@@ -181,7 +181,8 @@ SingleAxisStage::SingleAxisStage(std::string const& name,
     case TypeIDLabJack050: defaultDeviceUnitsPerMm = 1228800.0; break;
     case TypeIDLabJack490: defaultDeviceUnitsPerMm = 134737.0; break;
     case TypeIDLongTravelStage: defaultDeviceUnitsPerMm = 409600.0; break;
-    case TypeIDVerticalStage: defaultDeviceUnitsPerMm = 25050.0; break;
+    case TypeIDVerticalStage: defaultDeviceUnitsPerMm = 25050.0; break; 
+    case TypeIDKCubeInertialMotor1Channel: defaultDeviceUnitsPerMm = 28248.5876; break; // measured by h.liu on 2021/11/23 
     }
     CreateFloatProperty(PROP_DeviceUnitsPerMillimeter,
         defaultDeviceUnitsPerMm, false, nullptr, true);

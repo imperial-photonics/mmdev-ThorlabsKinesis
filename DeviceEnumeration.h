@@ -103,7 +103,9 @@ enum KinesisDeviceTypeID {
     TypeIDFilterWheel = 47, // doc
     TypeIDKCubeBrushless = 28, // doc
     TypeIDKCubeDCServo = 27, // doc
-    TypeIDKCubeInertialMotor = 97, // doc
+    //TypeIDKCubeInertialMotor = 97, // doc // commented by h.liu
+    TypeIDKCubeInertialMotor4Channel = 97, // doc // added by h.liu
+    TypeIDKCubeInertialMotor1Channel = 74, // doc // added by h.liu
     TypeIDKCubeLaserDiode = 98, // net
     TypeIDKCubeLaserSource = 56, // doc
     TypeIDKCubeNanoTrak = 57, // doc
@@ -148,6 +150,8 @@ inline bool IsPotentiallyMultiChannel(std::string const& serialNo) {
     case TypeIDBenchtopStepper3Channel:
     case TypeIDModularPiezo:
     case TypeIDModularStepper:
+    case TypeIDKCubeInertialMotor4Channel: // added by h.liu - for KcubeInertia KIM101
+    case TypeIDKCubeInertialMotor1Channel: // added by h.liu - for KcubeInertia KIM001 
         return true;
     default:
         return false;

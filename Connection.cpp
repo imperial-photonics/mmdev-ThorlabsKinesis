@@ -46,6 +46,7 @@
 #include "TCubeStepper.h"
 #include "IntegratedStepper.h"
 #include "VerticalStage.h"
+#include "KCubeInertial.h"
 
 
 std::shared_ptr<KinesisDeviceConnection> MakeConnection(std::string const& serialNo) {
@@ -66,6 +67,14 @@ std::shared_ptr<KinesisDeviceConnection> MakeConnection(std::string const& seria
     case TypeIDBenchtopStepper3Channel:
         access = std::make_unique<BenchtopStepperAccess>(serialNo);
         break;
+
+    //  added by h.liu  
+    // ----------
+    case TypeIDKCubeInertialMotor4Channel:
+    case TypeIDKCubeInertialMotor1Channel:
+        access = std::make_unique<KCubeInertialAccess>(serialNo);
+        break; 
+    // ----------
 
     case TypeIDKCubeBrushless:
         access = std::make_unique<KCubeBrushlessAccess>(serialNo);
@@ -125,6 +134,13 @@ std::unique_ptr<MotorDrive> MakeKinesisMotorDrive(
     case TypeIDBenchtopStepper1Channel:
     case TypeIDBenchtopStepper3Channel:
         return std::make_unique<BenchtopStepper>(connection, channel);
+
+    //  added by h.liu 
+    // ----------
+    case TypeIDKCubeInertialMotor4Channel:
+    case TypeIDKCubeInertialMotor1Channel:
+        return std::make_unique<KCubeInertial>(connection, channel);
+    // ----------
 
     case TypeIDKCubeBrushless:
         return std::make_unique<KCubeBrushless>(connection);
